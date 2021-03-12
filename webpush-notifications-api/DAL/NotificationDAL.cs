@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using WebPush;
+using webpush_notifications_api.Models;
 
 namespace webpush_notifications_api.DAL
 {
     public class NotificationDAL
     {
-        private static Dictionary<string, PushSubscription> StaticDic = new Dictionary<string, PushSubscription>();
+        private static Dictionary<string, SubscriptionModel> StaticDic = new Dictionary<string, SubscriptionModel>();
 
-        public static PushSubscription GetSubscription(string client)
+        public static SubscriptionModel GetSubscription(string client)
         {
-            PushSubscription res;
+            SubscriptionModel res;
             StaticDic.TryGetValue(client, out res);
             return res;
         }
 
-        public static void SaveSubscription(string client, PushSubscription subscription)
+        public static void SaveSubscription(string client, SubscriptionModel subscription)
         {
             StaticDic.Add(client, subscription);
         }

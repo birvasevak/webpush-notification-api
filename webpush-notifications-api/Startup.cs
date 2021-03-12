@@ -1,17 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebPush;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace webpush_notifications_api
 {
@@ -28,7 +19,8 @@ namespace webpush_notifications_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Version = "v1",
@@ -37,14 +29,6 @@ namespace webpush_notifications_api
                 });
             });
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("CorsPolicy",
-            //        builder => builder.AllowCredentials()
-            //            .WithOrigins("http://localhost:9090", "https://localhost:9090")
-            //            .AllowAnyMethod()
-            //            .AllowAnyHeader());
-            //});
 
             services.AddCors();
 
@@ -67,7 +51,6 @@ namespace webpush_notifications_api
                 .WithOrigins("http://localhost:9090", "https://localhost:9090", "https://localhost:4200", "http://localhost:4200");
             });
 
-            // app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 

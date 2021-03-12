@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using WebPush;
-using webpush_notifications_api.Models;
 using webpush_notifications_api.DAL;
+using webpush_notifications_api.Models;
 
 namespace webpush_notifications_api.Controllers
 {
@@ -19,7 +16,6 @@ namespace webpush_notifications_api.Controllers
     public class NotificationController : Controller
     {
         private readonly IConfiguration configuration;
-        private static Dictionary<string, PushSubscription> StaticDic = new Dictionary<string, PushSubscription>();
 
         public NotificationController(IConfiguration configuration)
         {
@@ -35,7 +31,7 @@ namespace webpush_notifications_api.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [Route("subscribe/{client}")]
-        public IActionResult Subscribe( string client, [FromBody] PushSubscription subscription)
+        public IActionResult Subscribe(string client, [FromBody] SubscriptionModel subscription)
         {
             if (client == null)
             {
@@ -71,7 +67,8 @@ namespace webpush_notifications_api.Controllers
             {
                 return BadRequest("No Client Name parsed.");
             }
-            PushSubscription subscription = NotificationDAL.GetSubscription(client);
+            SubscriptionModel sub = NotificationDAL.GetSubscription(client);
+            PushSubscription subscription = new PushSubscription(sub.endpoint, sub.keys.p256dh, sub.keys.auth);
             if (subscription == null)
             {
                 return BadRequest("Client was not found");

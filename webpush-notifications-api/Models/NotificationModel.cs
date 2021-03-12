@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace webpush_notifications_api.Models
+﻿namespace webpush_notifications_api.Models
 {
     public class NotificationModel
     {
@@ -15,7 +10,6 @@ namespace webpush_notifications_api.Models
     public class SubscriptionModel
     {
         public string endpoint { get; set; }
-        public int expirationTime { get; set; }
         public Keys keys { get; set; }
     }
 
